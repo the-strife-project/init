@@ -14,7 +14,7 @@ inline void failed() { std::printf("\033\x0C""Failed!\033\x0A\n"); }
 extern "C" void _start() {
 	print("This is init\n");
 
-	auto pid = std::run("/cd/bin/splash");
+	auto pid = std::run("/cd/bin/splash", {}, {});
 	if(std::getLastLoaderError()) {
 		failed();
 		std::exit(1);
@@ -22,7 +22,7 @@ extern "C" void _start() {
 	std::wait(pid);
 
 	print("Running registry... ");
-	std::run("/cd/bin/registry");
+	std::run("/cd/bin/registry", {}, {});
 	if(std::getLastLoaderError()) {
 		failed();
 		std::exit(2);
@@ -31,7 +31,7 @@ extern "C" void _start() {
 	ok();
 
 	print("Running keyboard... ");
-	std::run("/cd/bin/keyboard");
+	std::run("/cd/bin/keyboard", {}, {});
 	if(std::getLastLoaderError()) {
 		failed();
 		std::exit(3);
@@ -52,7 +52,7 @@ extern "C" void _start() {
 			std::printf("\n");
 		}
 
-		pid = std::run("/cd/bin/shell");
+		pid = std::run("/cd/bin/shell", {}, {});
 		if(std::getLastLoaderError()) {
 			failed();
 			std::exit(4);
