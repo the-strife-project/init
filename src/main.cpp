@@ -21,11 +21,20 @@ extern "C" void _start() {
 	}
 	std::wait(pid);
 
+	print("Running users... ");
+	std::run("/cd/bin/users", {}, {});
+	if(std::getLastLoaderError()) {
+		failed();
+		std::exit(2);
+	}
+	while(!std::resolve("users"));
+	ok();
+
 	print("Running registry... ");
 	std::run("/cd/bin/registry", {}, {});
 	if(std::getLastLoaderError()) {
 		failed();
-		std::exit(2);
+		std::exit(3);
 	}
 	while(!std::resolve("registry"));
 	ok();
@@ -34,7 +43,7 @@ extern "C" void _start() {
 	std::run("/cd/bin/keyboard", {}, {});
 	if(std::getLastLoaderError()) {
 		failed();
-		std::exit(3);
+		std::exit(4);
 	}
 	while(!std::resolve("keyboard"));
 	ok();
@@ -55,7 +64,7 @@ extern "C" void _start() {
 		pid = std::run("/cd/bin/shell", {}, {});
 		if(std::getLastLoaderError()) {
 			failed();
-			std::exit(4);
+			std::exit(5);
 		}
 		std::wait(pid);
 	}
