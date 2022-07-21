@@ -39,11 +39,20 @@ extern "C" void _start() {
 	while(!std::resolve("registry"));
 	ok();
 
+	print("Running switcher... ");
+	std::run("/cd/bin/switcher", {}, {});
+	if(std::getLastLoaderError()) {
+		failed();
+		std::exit(4);
+	}
+	while(!std::resolve("switcher"));
+	ok();
+
 	print("Running keyboard... ");
 	std::run("/cd/bin/keyboard", {}, {});
 	if(std::getLastLoaderError()) {
 		failed();
-		std::exit(4);
+		std::exit(5);
 	}
 	while(!std::resolve("keyboard"));
 	ok();
@@ -64,7 +73,7 @@ extern "C" void _start() {
 		pid = std::run("/cd/bin/shell", {}, {});
 		if(std::getLastLoaderError()) {
 			failed();
-			std::exit(5);
+			std::exit(6);
 		}
 		std::wait(pid);
 	}
